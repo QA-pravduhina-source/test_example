@@ -40,6 +40,7 @@ python_course/
 ├── main.py                    # credit_scoring, parse_positive_int
 ├── database.py                # loan_applications, process_all_applications
 ├── app.py                     # FastAPI-приложение
+├── Dockerfile                 # образ для запуска API в контейнере
 ├── test.py                    # тесты скоринга и безопасности
 ├── test_database.py           # тесты базы заявок
 ├── test_generate_entities.py  # генерация сущностей для ручных тестов
@@ -88,6 +89,26 @@ python -m uvicorn app:app --reload
   "status": "Одобрено! Кредит на сумму 500000 успешно согласован."
 }
 ```
+
+---
+
+## Запуск в Docker
+
+Сборка образа из корня проекта:
+
+```bash
+docker build -t credit-scoring-api .
+```
+
+Запуск контейнера (порт 8000):
+
+```bash
+docker run -p 8000:8000 credit-scoring-api
+```
+
+После старта API доступен по адресу [http://127.0.0.1:8000](http://127.0.0.1:8000), документация — [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
+
+В образе используется `python:3.12-slim`; зависимости (`fastapi`, `uvicorn`, `pydantic`) устанавливаются при сборке. Сервер слушает `0.0.0.0:8000` внутри контейнера.
 
 ---
 
