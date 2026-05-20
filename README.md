@@ -196,7 +196,13 @@ pip install pytest pytest-mock httpx
 pytest test_api_pytest.py
 ```
 
-В **GitHub Actions** при push в `main` запускается `pytest test_api_pytest.py` (workflow `python-tests.yml`).
+Все тесты (`unittest` и `pytest`) запускаются одной командой:
+
+```bash
+pytest -v
+```
+
+В **GitHub Actions** при push в `main` выполняется `pytest -v` (см. `pytest.ini`, workflow `python-tests.yml`).
 
 ---
 
