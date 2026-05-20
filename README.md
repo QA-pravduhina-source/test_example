@@ -46,7 +46,8 @@ python_course/
 ├── docker-compose.yml         # PostgreSQL + FastAPI (db + web)
 ├── .env.example               # шаблон переменных окружения (пароли, DATABASE_URL)
 ├── .github/workflows/         # CI: GitHub Actions (python-tests.yml)
-├── test.py                    # тесты скоринга и безопасности
+├── test.py                    # тесты скоринга и безопасности (unittest)
+├── test_api_pytest.py         # тесты API FastAPI (pytest + pytest-mock)
 ├── test_database.py           # тесты базы заявок
 ├── test_generate_entities.py  # генерация сущностей для ручных тестов
 ├── generated_test_data.json   # создаётся после test_generate_entities.py
@@ -188,7 +189,14 @@ python test_generate_entities.py
 python -m unittest discover -v
 ```
 
-Та же команда выполняется автоматически в **GitHub Actions** при каждом push в ветку `main` (workflow `python-tests.yml`).
+**Тесты API (pytest):**
+
+```bash
+pip install pytest pytest-mock httpx
+pytest test_api_pytest.py
+```
+
+В **GitHub Actions** при push в `main` запускается `pytest test_api_pytest.py` (workflow `python-tests.yml`).
 
 ---
 
