@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/QA-pravduhina-source/test_example/actions/workflows/python-tests.yml/badge.svg?branch=main)](https://github.com/QA-pravduhina-source/test_example/actions/workflows/python-tests.yml)
+
 # Кредитный калькулятор-скоринг
 
 Демо-проект для автоматизации принятия решений по кредитным заявкам: расчёт скоринга, REST API на FastAPI, пакетная обработка заявок, автотесты (включая проверки безопасности) и фабрика тестовых сущностей для ручной проверки.
@@ -42,6 +44,7 @@ python_course/
 ├── app.py                     # FastAPI-приложение
 ├── Dockerfile                 # образ для запуска API в контейнере
 ├── docker-compose.yml         # PostgreSQL + FastAPI (db + web)
+├── .github/workflows/         # CI: GitHub Actions (python-tests.yml)
 ├── test.py                    # тесты скоринга и безопасности
 ├── test_database.py           # тесты базы заявок
 ├── test_generate_entities.py  # генерация сущностей для ручных тестов
@@ -175,6 +178,8 @@ python test_generate_entities.py
 ```bash
 python -m unittest discover -v
 ```
+
+Та же команда выполняется автоматически в **GitHub Actions** при каждом push в ветку `main` (workflow `python-tests.yml`).
 
 ---
 
