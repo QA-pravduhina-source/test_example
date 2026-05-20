@@ -1,4 +1,4 @@
-from main import credit_scoring
+from main import credit_scoring, log_database_error
 
 loan_applications = [
     {
@@ -24,7 +24,29 @@ loan_applications = [
 
 def process_all_applications() -> None:
     for app in loan_applications:
-        app["status"] = credit_scoring(app["income"], app["loan_amount"])
+        try:
+            app_id = app["id"]
+            income = app["income"]
+            loan_amount = app["loan_amount"]
+            app["status"] = credit_scoring(income, loan_amount)
+        except KeyError as exc:
+            log_database_error(
+                f"Ошибка БД: отсутствует обязательное поле заявки id={app.get('id', '?')}",
+                exc,
+            )
+            app["status"] = "Ошибка: некорректные данные заявки"
+        except (TypeError, ValueError) as exc:
+            log_database_error(
+                f"Ошибка БД: неверный тип данных заявки id={app.get('id', '?')}",
+                exc,
+            )
+            app["status"] = "Ошибка: некорректные данные заявки"
+        except Exception as exc:
+            log_database_error(
+                f"Ошибка БД: сбой обработки заявки id={app.get('id', '?')}",
+                exc,
+            )
+            app["status"] = "Ошибка: сбой обработки заявки"
 
 
 def print_all_applications() -> None:
