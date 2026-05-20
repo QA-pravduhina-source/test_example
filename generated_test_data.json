@@ -1,0 +1,170 @@
+{
+  "borrowers": [
+    {
+      "id": 1001,
+      "name": "Аня (тест)",
+      "income": 200000,
+      "applications": [
+        {
+          "id": 5001,
+          "borrower_id": 1001,
+          "client_name": "Аня (тест)",
+          "income": 200000,
+          "loan_amount": 500000,
+          "status": "Одобрено! Кредит на сумму 500000 успешно согласован."
+        }
+      ]
+    },
+    {
+      "id": 1002,
+      "name": "Ольга (тест)",
+      "income": 300000,
+      "applications": [
+        {
+          "id": 5002,
+          "borrower_id": 1002,
+          "client_name": "Ольга (тест)",
+          "income": 300000,
+          "loan_amount": 100000,
+          "status": "Одобрено! Кредит на сумму 100000 успешно согласован."
+        },
+        {
+          "id": 5003,
+          "borrower_id": 1002,
+          "client_name": "Ольга (тест)",
+          "income": 300000,
+          "loan_amount": 1000000,
+          "status": "Одобрено! Кредит на сумму 1000000 успешно согласован."
+        }
+      ]
+    },
+    {
+      "id": 1003,
+      "name": "Пётр (без заявок)",
+      "income": 180000,
+      "applications": []
+    },
+    {
+      "id": 1004,
+      "name": "Игорь (тест)",
+      "income": 150000,
+      "applications": [
+        {
+          "id": 5004,
+          "borrower_id": 1004,
+          "client_name": "Игорь (тест)",
+          "income": 150000,
+          "loan_amount": 750001,
+          "status": "Отказ: запрошенная сумма слишком велика для вашего дохода."
+        }
+      ]
+    },
+    {
+      "id": 1005,
+      "name": "Мария (тест)",
+      "income": 95000,
+      "applications": [
+        {
+          "id": 5005,
+          "borrower_id": 1005,
+          "client_name": "Мария (тест)",
+          "income": 95000,
+          "loan_amount": 200000,
+          "status": "Отказ: ваш доход ниже минимального лимита."
+        }
+      ]
+    }
+  ],
+  "applications": [
+    {
+      "id": 5001,
+      "borrower_id": 1001,
+      "client_name": "Аня (тест)",
+      "income": 200000,
+      "loan_amount": 500000,
+      "status": "Одобрено! Кредит на сумму 500000 успешно согласован."
+    },
+    {
+      "id": 5002,
+      "borrower_id": 1002,
+      "client_name": "Ольга (тест)",
+      "income": 300000,
+      "loan_amount": 100000,
+      "status": "Одобрено! Кредит на сумму 100000 успешно согласован."
+    },
+    {
+      "id": 5003,
+      "borrower_id": 1002,
+      "client_name": "Ольга (тест)",
+      "income": 300000,
+      "loan_amount": 1000000,
+      "status": "Одобрено! Кредит на сумму 1000000 успешно согласован."
+    },
+    {
+      "id": 5004,
+      "borrower_id": 1004,
+      "client_name": "Игорь (тест)",
+      "income": 150000,
+      "loan_amount": 750001,
+      "status": "Отказ: запрошенная сумма слишком велика для вашего дохода."
+    },
+    {
+      "id": 5005,
+      "borrower_id": 1005,
+      "client_name": "Мария (тест)",
+      "income": 95000,
+      "loan_amount": 200000,
+      "status": "Отказ: ваш доход ниже минимального лимита."
+    }
+  ],
+  "borrowers_without_applications": [
+    {
+      "id": 1003,
+      "name": "Пётр (без заявок)",
+      "income": 180000,
+      "applications": []
+    }
+  ],
+  "api_examples": [
+    {
+      "description": "Заявка №5001 (Аня (тест))",
+      "post_body": {
+        "income": 200000,
+        "loan_amount": 500000
+      },
+      "expected_status_contains": "Одобрено"
+    },
+    {
+      "description": "Заявка №5002 (Ольга (тест))",
+      "post_body": {
+        "income": 300000,
+        "loan_amount": 100000
+      },
+      "expected_status_contains": "Одобрено"
+    },
+    {
+      "description": "Заявка №5003 (Ольга (тест))",
+      "post_body": {
+        "income": 300000,
+        "loan_amount": 1000000
+      },
+      "expected_status_contains": "Одобрено"
+    },
+    {
+      "description": "Заявка №5004 (Игорь (тест))",
+      "post_body": {
+        "income": 150000,
+        "loan_amount": 750001
+      },
+      "expected_status_contains": "Отказ"
+    },
+    {
+      "description": "Заявка №5005 (Мария (тест))",
+      "post_body": {
+        "income": 95000,
+        "loan_amount": 200000
+      },
+      "expected_status_contains": "Отказ"
+    }
+  ]
+}
