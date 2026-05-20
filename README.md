@@ -41,6 +41,7 @@ python_course/
 ├── database.py                # loan_applications, process_all_applications
 ├── app.py                     # FastAPI-приложение
 ├── Dockerfile                 # образ для запуска API в контейнере
+├── docker-compose.yml         # PostgreSQL + FastAPI (db + web)
 ├── test.py                    # тесты скоринга и безопасности
 ├── test_database.py           # тесты базы заявок
 ├── test_generate_entities.py  # генерация сущностей для ручных тестов
@@ -109,6 +110,35 @@ docker run -p 8000:8000 credit-scoring-api
 После старта API доступен по адресу [http://127.0.0.1:8000](http://127.0.0.1:8000), документация — [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 В образе используется `python:3.12-slim`; зависимости (`fastapi`, `uvicorn`, `pydantic`) устанавливаются при сборке. Сервер слушает `0.0.0.0:8000` внутри контейнера.
+
+### Запуск через Docker Compose
+
+Поднимает PostgreSQL (`fintech_db`) и API (`fintech_web_app`) одной командой:
+
+```bash
+docker compose up --build
+```
+
+В фоновом режиме:
+
+```bash
+docker compose up --build -d
+```
+
+Остановка и удаление контейнеров:
+
+```bash
+docker compose down
+```
+
+| Сервис | Контейнер | Порт | Описание |
+|--------|-----------|------|----------|
+| `db` | `fintech_db` | 5432 | PostgreSQL 15, БД `fintech_database` |
+| `web` | `fintech_web_app` | 8000 | FastAPI, `DATABASE_URL` → `db:5432` |
+
+Данные PostgreSQL сохраняются в именованном томе `postgres_data` (`/var/lib/postgresql/data` в контейнере).
+
+После старта: API — [http://127.0.0.1:8000](http://127.0.0.1:8000), Swagger — [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs).
 
 ---
 

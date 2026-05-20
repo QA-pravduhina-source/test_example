@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: fintech_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: fintech_database
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    container_name: fintech_web_app
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:secret_password@db:5432/fintech_database
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
