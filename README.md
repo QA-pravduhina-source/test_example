@@ -155,11 +155,33 @@ docker compose down
 
 ---
 
+## Автотесты в проекте
+
+**Всего в репозитории: 68 автотестов** (51 через `pytest -v` + 17 в `test.py`).
+
+| Файл | Кол-во | Запускается через `pytest -v` | Назначение |
+|------|--------|--------------------------------|------------|
+| `test_api_pytest.py` | 27 | да | API FastAPI, моки, негативные сценарии, безопасность |
+| `test_database.py` | 17 | да | обработка заявок, консистентность и безопасность данных |
+| `test_generate_entities.py` | 7 | да | фабрика заёмщиков и заявок для ручных тестов |
+| `test.py` | 17 | нет* | скоринг, валидация ввода, безопасность (`unittest`) |
+
+\* `test.py` не попадает под маску `test_*.py` в `pytest.ini`; его можно запустить отдельно (см. ниже).
+
+---
+
 ## Запуск автотестов
 
-Все тесты используют стандартный модуль `unittest`.
+**Все тесты pytest + unittest-файлы одной командой:**
 
-**Скоринг и безопасность ввода:**
+```bash
+pip install pytest pytest-mock httpx
+pytest -v
+```
+
+В **GitHub Actions** при push в `main` выполняется `pytest -v` (см. `pytest.ini`, workflow `python-tests.yml`).
+
+**Скоринг и безопасность ввода** (`test.py`, 17 тестов):
 
 ```bash
 python test.py
@@ -183,26 +205,12 @@ python test_database.py
 python test_generate_entities.py
 ```
 
-**Все тесты одной командой:**
+**Полный прогон unittest + pytest** (все 68 тестов):
 
 ```bash
-python -m unittest discover -v
-```
-
-**Тесты API (pytest):**
-
-```bash
-pip install pytest pytest-mock httpx
-pytest test_api_pytest.py
-```
-
-Все тесты (`unittest` и `pytest`) запускаются одной командой:
-
-```bash
+python -m unittest test -v
 pytest -v
 ```
-
-В **GitHub Actions** при push в `main` выполняется `pytest -v` (см. `pytest.ini`, workflow `python-tests.yml`).
 
 ---
 
